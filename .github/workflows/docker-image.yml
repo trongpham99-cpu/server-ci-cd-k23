@@ -1,18 +1,21 @@
-name: Docker Image CI
+name: Node.js CI/CD
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [master]  
 
 jobs:
-
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Lấy code từ GitHub
+        uses: actions/checkout@v4
+
+      - name: Thiết lập Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cài đặt thư viện
+        run: npm install
